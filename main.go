@@ -34,11 +34,11 @@ func main() {
 	_ = tlsConf
 
 	srv := &http.Server{
-		Addr:           ":2333",
-		TLSConfig:      tlsConf,
+		Addr: ":2333",
+		//TLSConfig:      tlsConf,
 		Handler:        http3Handle(),
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Fatalln(srv.ListenAndServe())
+	log.Fatal(srv.ListenAndServeTLS("./cert/8804910_www.quickstart.top.pem", "./cert/8804910_www.quickstart.top.key"))
 }
