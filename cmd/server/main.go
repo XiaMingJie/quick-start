@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/lucas-clemente/quic-go/http3"
 	"log"
 	"net/http"
 )
@@ -16,7 +15,7 @@ func http3Handle() http.Handler {
 }
 
 func main() {
-	srv := &http3.Server{
+	srv := &http.Server{
 		Addr:           ":2333",
 		Handler:        http3Handle(),
 		MaxHeaderBytes: 1 << 20,
