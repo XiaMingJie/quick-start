@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/tls"
 	"fmt"
+	"github.com/lucas-clemente/quic-go/http3"
 	"log"
 	"net/http"
 )
@@ -33,7 +34,7 @@ func main() {
 	}
 	_ = tlsConf
 
-	srv := &http.Server{
+	srv := &http3.Server{
 		Addr: ":2333",
 		//TLSConfig:      tlsConf,
 		Handler:        http3Handle(),
