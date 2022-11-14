@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/lucas-clemente/quic-go/http3"
 	"log"
 	"net/http"
 )
@@ -19,5 +18,6 @@ func main() {
 	http.HandleFunc("/hello", func(writer http.ResponseWriter, request *http.Request) {
 		fmt.Fprintf(writer, "welcome to quick start")
 	})
-	log.Fatal(http3.ListenAndServeQUIC(":2333", "cert/8804910_www.quickstart.top.pem", "cert/8804910_www.quickstart.top.key", nil))
+	//log.Fatal(http3.ListenAndServeQUIC(":2333", "cert/8804910_www.quickstart.top.pem", "cert/8804910_www.quickstart.top.key", nil))
+	log.Fatalln(http.ListenAndServeTLS(":2333", "cert/8804910_www.quickstart.top.pem", "cert/8804910_www.quickstart.top.key", nil))
 }
