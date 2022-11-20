@@ -1,23 +1,27 @@
 package main
 
 import (
-	"fmt"
 	"github.com/lucas-clemente/quic-go/http3"
+	"golang.org/x/net/websocket"
 	"log"
 	"net/http"
 )
 
 func http3Handle() http.Handler {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/hello", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "welcome to quick start")
-	})
+	mux.Handle("/hello", websocket.Handler(wsHello))
 	return mux
 }
 
+func wsHello(conn *websocket.Conn) {
+	conn.Write([]byte("hello! success"))
+}
+
 func main() {
-	http.HandleFunc("/hello", func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Fprintf(writer, "welcome to quick start")
-	})
-	log.Fatal(http3.ListenAndServeQUIC(":2333", "cert/8804910_www.quickstart.top.pem", "cert/8804910_www.quickstart.top.key", nil))
+	srv := http3.Server{
+		Addr:    ":2333",
+		Handler: http3Handle(),
+	}
+
+	log.Fatal(srv.ListenAndServeTLS("cert/8804910_www.quickstart.top.pem", "cert/8804910_www.quickstart.top.key"))
 }
